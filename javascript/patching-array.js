@@ -1,3 +1,6 @@
+const nums = [1, 5, 10];
+const n = 20;
+
 /**
  * @param {number[]} nums
  * @param {number} n
@@ -5,55 +8,23 @@
  */
 const minPatches = (nums, n) => {
   const patchableNums = [...nums];
-  const rangeToCover = Array.from({ length: n }).fill(false);
-  let numberOfPatches = 0;
+  const appliedPatches = [];
+  let patch = 1;
+  let i = 0;
 
-  for (let i = 0; !rangeToCover.every((value) => value); i++) {
-    if (i > 0 && !patchableNums.includes(i)) {
-      patchableNums.push(i);
-      numberOfPatches++;
-    }
-
-    const combinations = filterEmptyCombinations(
-      recursiveCombinations([...patchableNums])
-    );
-
-    combinations.forEach((combination) => {
-      const sum = addNumbers(combination);
-
-      rangeToCover[sum - 1] = true;
-    });
-  }
-
-  return numberOfPatches;
-};
-
-const nums = [1, 5, 10];
-const n = 20;
-
-/**
- * Function that calculates all of the possible combinations for the provided array of numbers
- * by looping through its elements.
- * @param {Array<number>} array
- * @returns {Array<Array<number>>}
- */
-const loopingCombinations = (array) => {
-  const result = [[]];
-
-  for (let i = 0; i < array.length; i++) {
-    const currentItem = array[i];
-    const currentLength = result.length;
-
-    for (let j = 0; j < currentLength; j++) {
-      const currentCombination = result[j];
-
-      const newCombination = currentCombination.concat(currentItem);
-
-      result.push(newCombination);
+  while (patch <= n) {
+    if (i < patchableNums.length && patchableNums[i] <= patch) {
+      patch += patchableNums[i];
+      i++;
+    } else {
+      appliedPatches.push(patch);
+      patch += patch;
     }
   }
 
-  return result;
+  // console.log(appliedPatches);
+
+  return appliedPatches.length;
 };
 
 /**
