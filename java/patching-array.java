@@ -1,7 +1,7 @@
 class Solution {
     public int minPatches(int[] nums, int n) {
-        ArrayList<Integer> appliedPatches = new ArrayList<>();
-        int patch = 1;
+        ArrayList<Long> appliedPatches = new ArrayList<>();
+        long patch = 1;
         int i = 0;
 
         while (patch <= n) {
